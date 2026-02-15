@@ -7,6 +7,7 @@
 #include "signaling/http_service.h"
 #include "signaling/mqtt_service.h"
 #include "signaling/websocket_service.h"
+#include "signaling/kinesis_service.h"
 
 int main(int argc, char *argv[]) {
     Args args;
@@ -38,6 +39,10 @@ int main(int argc, char *argv[]) {
 
     if (args.use_mqtt) {
         services.push_back(MqttService::Create(args, conductor));
+    }
+
+    if (args.use_kvs) {
+        services.push_back(KinesisService::Create(args, conductor));
     }
 
     if (services.empty()) {

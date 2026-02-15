@@ -212,7 +212,17 @@ void Parser::ParseArgs(int argc, char *argv[], Args &args) {
         ("ws-room", bpo::value<std::string>(&args.ws_room)->default_value(args.ws_room),
             "The room name to join on the SFU server.")
         ("ws-key", bpo::value<std::string>(&args.ws_key)->default_value(args.ws_key),
-            "The API key used to authenticate with the SFU server.");
+            "The API key used to authenticate with the SFU server.")
+        ("use-kvs", bpo::bool_switch(&args.use_kvs)->default_value(args.use_kvs),
+            "Use Kinesis Video Streams for signaling.")
+        ("kvs-channel", bpo::value<std::string>(&args.kvs_channel)->default_value(args.kvs_channel),
+            "The Kinesis Video Streams channel name.")
+        ("aws-region", bpo::value<std::string>(&args.aws_region)->default_value(args.aws_region),
+            "The AWS region for Kinesis Video Streams.")
+        ("aws-access-key", bpo::value<std::string>(&args.aws_access_key)->default_value(args.aws_access_key),
+            "The AWS access key (optional if using env vars).")
+        ("aws-secret-key", bpo::value<std::string>(&args.aws_secret_key)->default_value(args.aws_secret_key),
+            "The AWS secret key (optional if using env vars).");
     // clang-format on
 
     bpo::variables_map vm;

@@ -150,6 +150,13 @@ struct Args {
     std::string ws_host = "";
     std::string ws_room = "";
     std::string ws_key = "";
+
+    // kinesis signaling
+    bool use_kvs = false;
+    std::string kvs_channel = "";
+    std::string aws_region = "us-west-2";
+    std::string aws_access_key = "";
+    std::string aws_secret_key = "";
 };
 
 #endif // ARGS_H_
