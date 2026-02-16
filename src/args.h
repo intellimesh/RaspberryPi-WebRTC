@@ -157,6 +157,9 @@ struct Args {
     std::string aws_region = "us-west-2";
     std::string aws_access_key = "";
     std::string aws_secret_key = "";
+
+    bool use_gnss = false;
+    std::string gnss_port = "/dev/ttyUSB1";
 };
 
 #endif // ARGS_H_

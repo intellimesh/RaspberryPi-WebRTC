@@ -48,6 +48,8 @@ elseif(${PLATFORM} STREQUAL "raspberrypi")
         -DUSE_LIBCAMERA_CAPTURE
         -DUSE_RPI_HW_ENCODER
     )
+elseif(${PLATFORM} STREQUAL "linux")
+    message(STATUS "Generic Linux Build")
 else()
     message(FATAL_ERROR "Unknown PLATFORM: ${PLATFORM}")
 endif()
@@ -95,6 +97,17 @@ add_subdirectory(src/rtc)
 add_subdirectory(src/ipc)
 add_subdirectory(src/signaling)
 add_subdirectory(src/track)
+add_subdirectory(src/gnss)
+
+# Kinesis Video Streams WebRTC SDK
+set(BUILD_SAMPLE OFF CACHE BOOL "" FORCE)
+set(BUILD_TEST OFF CACHE BOOL "" FORCE)
+set(BUILD_DEPENDENCIES ON CACHE BOOL "Build dependencies from source" FORCE)
+add_subdirectory(external/amazon-kinesis-video-streams-webrtc-sdk-c)
+
+include_directories(
+    external/amazon-kinesis-video-streams-webrtc-sdk-c/src/include
+)
 
 if(BUILD_TEST STREQUAL "http_server")
     add_executable(test-http-server test/test_http_server.cpp)
@@ -180,5 +193,6 @@ else()
     add_executable(${PROJECT_NAME} src/main.cpp)
     target_link_libraries(${PROJECT_NAME}
         src
+        gnss
     )
 endif()

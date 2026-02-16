@@ -222,7 +222,11 @@ void Parser::ParseArgs(int argc, char *argv[], Args &args) {
         ("aws-access-key", bpo::value<std::string>(&args.aws_access_key)->default_value(args.aws_access_key),
             "The AWS access key (optional if using env vars).")
         ("aws-secret-key", bpo::value<std::string>(&args.aws_secret_key)->default_value(args.aws_secret_key),
-            "The AWS secret key (optional if using env vars).");
+            "The AWS secret key (optional if using env vars).")
+        ("use-gnss", bpo::bool_switch(&args.use_gnss)->default_value(args.use_gnss),
+            "Enable GNSS service")
+        ("gnss-port", bpo::value<std::string>(&args.gnss_port)->default_value(args.gnss_port),
+            "Serial port for GNSS (e.g. /dev/ttyUSB1)");
     // clang-format on
 
     bpo::variables_map vm;

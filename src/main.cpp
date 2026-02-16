@@ -8,6 +8,7 @@
 #include "signaling/mqtt_service.h"
 #include "signaling/websocket_service.h"
 #include "signaling/kinesis_service.h"
+#include "gnss/gnss_service.h"
 
 int main(int argc, char *argv[]) {
     Args args;
@@ -28,6 +29,7 @@ int main(int argc, char *argv[]) {
     auto work_guard = boost::asio::make_work_guard(ioc);
 
     std::vector<std::shared_ptr<SignalingService>> services;
+    std::shared_ptr<GnssService> gnss_service;
 
     if (args.use_whep) {
         services.push_back(HttpService::Create(args, conductor, ioc));
@@ -43,6 +45,10 @@ int main(int argc, char *argv[]) {
 
     if (args.use_kvs) {
         services.push_back(KinesisService::Create(args, conductor));
+    }
+
+    if (args.use_gnss) {
+        gnss_service = GnssService::Create(args, ioc);
     }
 
     if (services.empty()) {
